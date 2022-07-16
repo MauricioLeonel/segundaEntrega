@@ -3,27 +3,6 @@ const app = express()
 const dotenv = require('dotenv').config()
 const db = require('./db/db.js')
 
-
-
-
-
-
-// db2.collection("cities").add({
-//     name: "Los Angeles2",
-//   	state: "CA",
-//   	country: "USA"
-// })
-// .then((docRef) => {
-//     console.log("Document written with ID: ", docRef.id);
-// })
-// .catch((error) => {
-//     console.error("Error adding document: ", error);
-// });
-
-
-
-
-
 const routerProductos = require('./routes/routerProductos.js')
 const routerCarritos = require('./routes/routerCarritos.js')
 

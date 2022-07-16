@@ -1,19 +1,11 @@
-// const modelsMongoProductos = require('../../../models/modelsMongoProductos');
 const ContainerFirebase = require('../../../container/containerFirebase');
 
 class Productos extends ContainerFirebase{
 	constructor(){
 		super()
 	}
-	// init = async()=>{
-	// 	try{
-	// 		await this.create()
-	// 	}catch(e){
-	// 		await this.getPoductos()
-	// 	}
-	// }
 
-	getProductos = async ()=>{
+	getAllProducto = async ()=>{
 		return await this.getAll()
 	}
 
@@ -46,5 +38,5 @@ class Productos extends ContainerFirebase{
 }
 
 
-module.exports =  new Productos()
+module.exports =  Productos
 

@@ -27,13 +27,16 @@ class ContainerProductos {
 
 	getById = async(element)=>{
 		const result = await this.models.find({_id:element})
-		// console.log(result)
-		return result
+		if(result.length > 0 ){
+			return result
+		}else{
+			throw new Error('no existe el articulo')
+		}
 	}
 	updateById = async(element)=>{
 		try{
 			const {nombre,descripcion,codigo,foto,precio,stock,id}=element
-			await this.models.findOneAndUpdate({_id:id},
+			const result = await this.models.findOneAndUpdate({_id:id},
 				{
 					$set:{
 						nombre:nombre,
@@ -48,17 +51,25 @@ class ContainerProductos {
 					new:true
 				}
 			)
-			return 'data actualizada'
+			if(result){
+				return result
+			}else{
+				throw new Error('no existe el articulo')
+			}
 		}catch(e){
-			return 'hubo un error'
+			return e
 		}
 	}
 	deleteById = async(id)=>{
 		try{
-			await this.models.deleteOne({_id:id})
-			return 'los datos fueron borrados'
+			const result = await this.models.deleteOne({_id:id})
+			if(result){
+				return result
+			}else{
+				throw new Error('no existe el articulo')
+			}
 		}catch(e){
-			return 'no se pudo borrar'
+			return e
 		}
 	}
 }

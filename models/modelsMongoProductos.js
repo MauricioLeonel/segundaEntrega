@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 
 const modelsProducto = mongoose.Schema({
-	_id:{type:String,required:true},
+	_id:{type:Number,required:true},
 	nombre:String,
 	descripcion:String,
 	foto:String,

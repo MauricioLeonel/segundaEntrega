@@ -1,8 +1,5 @@
 const ContainerProductos = require('../../../container/containerSql')
-const {config2} = require('../../../db/config')
 
-// const productos = new modelsProductos(config)
-// console.log(modelsProductos)
 class Productos extends ContainerProductos{
 	constructor(data){
 		super(data)
@@ -12,14 +9,13 @@ class Productos extends ContainerProductos{
 		try{
 			await this.create()
 		}catch(e){
-			await this.getPoductos()
+			await this.getAllProducto()
 		}
 	}
 
-	getPoductos = async ()=>{
+	getAllProducto = async ()=>{
 		return await this.getAll()
 	}
-
 
 	saveProducto = async(data)=>{
 		return await this.insertData(data)
@@ -48,5 +44,4 @@ class Productos extends ContainerProductos{
 }
 
 
-module.exports = new Productos(config2)
-
+module.exports =  Productos

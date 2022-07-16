@@ -1,4 +1,3 @@
-const modelsMongoProductos = require('../../../models/modelsMongoProductos');
 const ContainerMongo = require('../../../container/containerMongo');
 
 class Productos extends ContainerMongo{
@@ -6,7 +5,7 @@ class Productos extends ContainerMongo{
 		super(data)
 	}
 
-	getPoductos = async ()=>{
+	getAllProducto = async ()=>{
 		return await this.getAll()
 	}
 
@@ -15,29 +14,28 @@ class Productos extends ContainerMongo{
 		return await this.insertData(data)
 	}
 	getByProductoId = async (element)=>{
-		
 		try{
 			return await this.getById(element)
 		}catch(e){
-			return 'no hay data'
+			return e
 		}
 	}
 	updateByProductoId = async (element)=>{
 		try{
-			await this.updateById(element)
-		}catch(e){
-			return 'no se pudieron actulizar los datos'
+			return await this.updateById(element)
+		}catch(e){			
+			return e
 		}
 	}
 	borrarByProductoId = async(id)=>{
 		try{
-			this.deleteById(id)
+			return this.deleteById(id)
 		}catch(e){
-			return 'no hubo productos'
+			return e
 		}
 	}
 }
 
 
-module.exports =  new Productos(modelsMongoProductos)
+module.exports =  Productos
 

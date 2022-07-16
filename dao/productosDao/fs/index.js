@@ -52,4 +52,4 @@ class Productos extends ContainerFs{
 }
 
 
-module.exports = new Productos('productos')
+module.exports =  Productos
