@@ -1,6 +1,6 @@
-const Container = require('../../../container/containerMysql')
+const ContainerProductos = require('../../../container/containerSql')
 
-class Carrito extends Container{
+class Productos extends ContainerProductos{
 	constructor(data){
 		super(data)
 		this.init()
@@ -20,25 +20,13 @@ class Carrito extends Container{
 	saveCarrito = async(data)=>{
 		return await this.insertData(data,'carrito')
 	}
-
-	saveProdCarrito = async(element)=>{
-		try{
-			const data = {
-				carrito_id:element.id,
-				producto_id:element.producto.id,
-				nombre:element.producto.nombre,
-				descripcion:element.producto.descripcion,
-				foto:element.producto.foto,
-				codigo:element.producto.codigo,
-				precio:element.producto.precio,
-				stock:element.producto.stock,// no se porque agrego el stock pero va
-				timestamp:element.producto.timestamp
-			}
-			return await this.insertData(data,'carri_prod')
-		}catch(e){
-			return 'no se pudieron actulizar los datos'
-		}
-	}
+	// getByCarritoId = async (element)=>{
+	// 	try{
+	// 		return await this.getById(element,'carrito')
+	// 	}catch(e){
+	// 		return 'no hay data'
+	// 	}
+	// }
 
 	getByCarritoId = async(element)=>{
 		try{
@@ -48,14 +36,7 @@ class Carrito extends Container{
 			return e
 		}
 	}
-
-	getByCarritoJoinId = async (element)=>{
-		try{
-			return await this.getByIdJoin(element,'carri_prod')
-		}catch(e){
-			return 'no hay data'
-		}
-	}
+	
 	updateByCarritoId = async (element,id)=>{
 		try{
 			// console.log(element,id)
@@ -87,12 +68,11 @@ class Carrito extends Container{
 		try{
 			return this.deleteById(id)
 		}catch(e){
-			return e
+			return 'no hubo Carritos'
 		}
 	}
 	borrarByProdCarritoId = async(id,id_prod)=>{
 		try{
-
 			return await this.deleteProdCar(id,id_prod,'carri_prod')
 		}catch(e){
 			return e
@@ -102,5 +82,4 @@ class Carrito extends Container{
 }
 
 
-module.exports =  Carrito
-
+module.exports =  Productos

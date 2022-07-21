@@ -6,33 +6,62 @@ class Carritos extends ContainerFs{
 	}
 
 	saveCarrito = async (data)=>{
+
 		try{
-			return await this.save(data)
+			const result = [{...data,producto:[]}]
+			return await this.save(...result)
 		}catch(e){
 			return 'no se pudo guardar'
 		}
 	}
 
 	getAllCarrito = async()=>{
-		return await this.getAll()
+		try{
+			return await this.getAll()
+		}catch(e){
+			return 'no hay data'
+		}
 	}
 
 	getByCarritoId = async(eleme)=>{
-		return await this.getById(eleme)
+		try{
+			return await this.getById(eleme)
+		}catch(e){
+			return 'no hay data'
+		}
 	}
 
-	updateByCarritoId = async(id)=>{
-		return await this.updateById(id)
+	updateByCarritoId = async(element,id)=>{
+		try{
+			const carrito =await this.getAll()
+			let result = carrito.filter(e=> e.id === id ? e.producto.push({...element}) : e)
+			return await this.updateById(result)
+			
+		}catch(e){
+			return 'no hay data'
+		}
 	}
 
 	borrarByCarritoId = async(id)=>{
-		return await this.borrarById(id)
+		try{
+			return await this.borrarById(id)
+		}catch(e){
+			return 'no hay data'
+		}
 	}
-	// borrarAllCarrito = async()=>{
-	// 	this.borrarTodo()
-	// }
+	borrarByProdCarritoId = async(id,id_prod)=>{
+		const carrito =await this.getAll()
+		let result = carrito.filter(e=>{
+			if(e.id === id){
+				let prodModi = e.producto.filter(a=>a.id!== id_prod)
+				e.producto = prodModi
+			}
+			return e
+		})
+		return await this.updateById(result)		
+	}
 
 }
 
 
-module.exports = new Carritos('carritos')
+module.exports = Carritos

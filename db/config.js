@@ -5,7 +5,7 @@ const config = {
 		port:3306,
 		user:'root',
 		password:'root',
-		database:'productos'
+		database:'coderhouse'
 	}
 }
 const config2 = {

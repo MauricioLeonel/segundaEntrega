@@ -1,7 +1,7 @@
 // const mongoose = require('mongoose');
 // const modelsMongoProductos = require('../../models/modelsMongoProductos');
 
-class ContainerProductos {
+class Container {
 	constructor(models){
 		this.models = models
 	}
@@ -30,22 +30,15 @@ class ContainerProductos {
 		if(result.length > 0 ){
 			return result
 		}else{
-			throw new Error('no existe el articulo')
+			throw new Error('no existe el elemento')
 		}
 	}
 	updateById = async(element)=>{
 		try{
-			const {nombre,descripcion,codigo,foto,precio,stock,id}=element
+			const {id}=element
 			const result = await this.models.findOneAndUpdate({_id:id},
 				{
-					$set:{
-						nombre:nombre,
-						descripcion:descripcion,
-						codigo:codigo,
-						foto:foto,
-						precio:precio,
-						stock:stock
-					}
+					$set:element
 				},
 				{
 					new:true
@@ -63,10 +56,11 @@ class ContainerProductos {
 	deleteById = async(id)=>{
 		try{
 			const result = await this.models.deleteOne({_id:id})
-			if(result){
-				return result
+			console.log(result)
+			if(result.deletedCount > 0){
+				return 'se borro el elemento'
 			}else{
-				throw new Error('no existe el articulo')
+				throw new Error('no existe el elemento')
 			}
 		}catch(e){
 			return e
@@ -74,4 +68,4 @@ class ContainerProductos {
 	}
 }
 
-module.exports = ContainerProductos
+module.exports = Container

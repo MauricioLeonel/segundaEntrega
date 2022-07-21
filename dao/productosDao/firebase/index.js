@@ -6,31 +6,31 @@ class Productos extends ContainerFirebase{
 	}
 
 	getAllProducto = async ()=>{
-		return await this.getAll()
+		return await this.getAll('producto')
 	}
 
 
 	saveProducto = async(data)=>{
-		return await this.insertData(data)
+		return await this.insertData(data,'producto')
 	}
 	getByProductoId = async (element)=>{
 		
 		try{
-			return await this.getById(element)
+			return await this.getById(element,'producto')
 		}catch(e){
 			return 'no hay data'
 		}
 	}
 	updateByProductoId = async (element)=>{
 		try{
-			await this.updateById(element)
+			return await this.updateById(element,'producto')
 		}catch(e){
 			return 'no se pudieron actulizar los datos'
 		}
 	}
 	borrarByProductoId = async(id)=>{
 		try{
-			this.deleteById(id)
+			return await this.deleteById(id,'producto')
 		}catch(e){
 			return 'no hubo productos'
 		}

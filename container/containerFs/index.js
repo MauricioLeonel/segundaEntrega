@@ -17,7 +17,7 @@ class ContainerFs{
 		    if(result.length >= 1){
 		    	return result
 		    }else{
-		    	throw new Error('producto no encontrado')
+		    	throw new Error('Elemento no encontrado')
 		    }
 		} catch(e) {
 			return e
@@ -26,7 +26,7 @@ class ContainerFs{
 	save = async (producto)=>{
 		try {
 			const data = await this.getAll()
-			producto.id = data?.length > 0  ? data[data.length-1].id+1 : 1
+			producto.id = data.length > 0  ? data[data.length-1].id+1 : 1
 			if(Array.isArray(producto)){
 				data.push(...producto)
 			}else{
@@ -40,15 +40,9 @@ class ContainerFs{
 	}
 	updateById = async (producto)=>{
 		try {
-			const data = await this.getAll()
-			if(data.find(e=>e.id === producto.id)){
-				const result = data.map(e=>e.id===producto.id ? e={...producto}: e)	
-			    await this.borrarTodo()
-			    await this.save(result)
-			    return 'Los datos fueron actualizados'
-			}else{
-				throw new Error('no hay data')
-			}
+		    await this.borrarTodo()
+		    await this.save(producto)
+		    return 'Los datos fueron actualizados'
 		} catch(e) {
 			return e
 		}

@@ -1,7 +1,7 @@
 // const {config} = require('../db/config.js')
 const knex = require('knex')
 
-class Productos extends knex{
+class Modelo extends knex{
 	constructor(data){
 		super(data)
 	}
@@ -9,4 +9,4 @@ class Productos extends knex{
 }
 
 
-module.exports =  Productos
+module.exports =  Modelo

@@ -5,48 +5,53 @@ class ContainerProductos extends db {
 		super()
 	}
 
-	getAll = async()=>{
-		const result = await this.collection('productos').get()
-		const cities = []
+	getAll = async(tabla)=>{
+		const result = await this.collection(tabla).get()
+		const arr = []
 		result.forEach((doc) => {
-	        cities.push({...doc.data(),id2:doc.id})
+	        arr.push({...doc.data(),id2:doc.id})
 	    });
-		return cities
+		return arr
 	}
 
-	insertData = async(data)=>{
-		const id = await this.getAll()
-		let id2
-		if(id.length > 0){
-			id2 = id[id.length-1]._id + 1
-		}else{
-			id2 = 1
+	insertData = async(data,tabla)=>{
+		try{
+			const id = await this.getAll(tabla)
+			let id2
+			if(id.length > 0){
+				id2 = id[id.length-1]._id + 1
+			}else{
+				id2 = 1
+			}
+			data = {...data, _id:id2}
+			const result = await this.collection(tabla).add(data)
+			return 'se guarda la data' 
+		}catch(e){
+			return e
 		}
-		data = {...data, _id:id2}
-		const result = await this.collection('productos').add(data)
-		return result 
 	}	
 
-	getById = async(element)=>{
-		const result = await this.getAll()
+	getById = async(element,tabla)=>{
+		const result = await this.getAll(tabla)
 		// const result2 = await this.collection('productos','Fkz99pqa9wx6YN4OxhGY')
 		return result.filter(e=>e._id === element)
 	}
-	updateById = async(element)=>{
+	updateById = async(element,tabla)=>{
 	    try{
-	   	 	const dataProdActualizar = await this.getById(element.id)
-		    let doc = await this.collection('productos').doc(dataProdActualizar[0].id2)
+	   	 	const dataProdActualizar = await this.getById((element.producto ? element._id : element.id), tabla)
+		    let doc = await this.collection(tabla).doc(dataProdActualizar[0].id2)
 		    let item = await doc.update(element)
 		    return 'se pudo actualizar todo'
 		}catch(e){
+			console.log(e)
 			return e
 		}
 	}
 
-	deleteById = async(id)=>{
+	deleteById = async(id,tabla)=>{
 		try{
-	   	 	const dataProdBorrar = await this.getById(id)
-		    let doc = await this.collection('productos').doc(dataProdBorrar[0].id2)
+	   	 	const dataProdBorrar = await this.getById(id,tabla)
+		    let doc = await this.collection(tabla).doc(dataProdBorrar[0].id2)
 		    let item = await doc.delete()
 		    return 'se pudo borrar el producto'
 		}catch(e){
